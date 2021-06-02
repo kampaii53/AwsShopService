@@ -17,6 +17,11 @@ public class ProductDto {
     public ProductDto() {
     }
 
+    public ProductDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
