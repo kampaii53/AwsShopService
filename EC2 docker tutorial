@@ -1,0 +1,17 @@
+1. set up AWS CLI
+2. set up Docker
+3. aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 378642390019.dkr.ecr.us-east-1.amazonaws.com
+4. build image by docker_build.sh
+5. docker tag app:latest 378642390019.dkr.ecr.us-east-1.amazonaws.com/kampaii:latest
+6. docker push 378642390019.dkr.ecr.us-east-1.amazonaws.com/kampaii:latest
+7. install putty to connect to AWS instance
+8. connect to instance by https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html
+8.1. NOTE that username for linux is ec2-user, others https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesConnecting.html
+9. install docker as mentioned in https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
+10. run aws configure in linux https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
+11. run in linux
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 378642390019.dkr.ecr.us-east-1.amazonaws.com
+12. docker pull 378642390019.dkr.ecr.us-east-1.amazonaws.com/kampaii:latest
+12.1. sudo service docker start the docker daemon is not started
+
+9. don't forget to delete your image from AWS ECR and stop the instance
