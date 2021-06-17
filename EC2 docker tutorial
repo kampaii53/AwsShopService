@@ -8,10 +8,17 @@
 8. connect to instance by https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html
 8.1. NOTE that username for linux is ec2-user, others https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesConnecting.html
 9. install docker as mentioned in https://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
-10. run aws configure in linux https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
+    sudo yum update -y
+    sudo amazon-linux-extras install docker
+    sudo service docker start
+    sudo usermod -a -G docker ec2-user
+10. run as linux https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html
+    aws configure
+    reconnect to ssh
 11. run in linux
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 378642390019.dkr.ecr.us-east-1.amazonaws.com
 12. docker pull 378642390019.dkr.ecr.us-east-1.amazonaws.com/kampaii:latest
 12.1. sudo service docker start the docker daemon is not started
-
-9. don't forget to delete your image from AWS ECR and stop the instance
+13. check the group rules on the instance - tcp port you want to start docker on should be opened
+once you switch the rules-restart your instance
+14. don't forget to delete your image from AWS ECR and stop the instance
