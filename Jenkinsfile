@@ -1,4 +1,10 @@
 node{
+    stage('Initialize'){
+        sh '''
+            echo "PATH = ${PATH}"
+            echo "M2_HOME = ${M2_HOME}"
+        '''
+    }
     stage('SCM checkout'){
         git 'https://github.com/kampaii53/AwsShopService'
     }
