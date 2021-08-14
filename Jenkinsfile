@@ -1,4 +1,5 @@
 pipeline {
+    agent{ label 'kampaii53'}
     tools {
         maven '3.8.2'
         jdk 'java8'
