@@ -5,9 +5,9 @@ pipeline {
         jdk 'java8'
     }
     stages{
-        stage('Compile-Package'){
+        stage('Build'){
             steps{
-                sh 'mvn package'
+                sh 'mvn install'
             }
         }
     }
