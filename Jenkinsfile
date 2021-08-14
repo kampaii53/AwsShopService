@@ -4,17 +4,15 @@ pipeline {
         jdk 'java8'
     }
     stages{
-        stage('Initialize'){
-            sh '''
-                echo "PATH = ${PATH}"
-                echo "M2_HOME = ${M2_HOME}"
-            '''
-        }
         stage('SCM checkout'){
-            git 'https://github.com/kampaii53/AwsShopService'
+            steps{
+                git 'https://github.com/kampaii53/AwsShopService'
+            }
         }
         stage('Compile-Package'){
-            sh 'mvn package'
+            steps{
+                sh 'mvn package'
+            }
         }
     }
 }
