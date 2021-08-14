@@ -1,4 +1,8 @@
 node{
+    tools {
+        maven '3.8.2'
+        jdk 'java8'
+    }
     stage('Initialize'){
         sh '''
             echo "PATH = ${PATH}"
