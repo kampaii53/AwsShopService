@@ -7,7 +7,12 @@ pipeline {
     stages{
         stage('Build'){
             steps{
-                bat 'mvn clean compile'
+                bat 'mvn clean package'
+            }
+        }
+        stage('Docker pub'){
+            steps{
+                bat 'docker_build.sh'
             }
         }
     }
