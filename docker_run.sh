@@ -1,1 +1,1 @@
-docker run -p8080:8080 app:latest
+docker run -p8080:80 app:latest
