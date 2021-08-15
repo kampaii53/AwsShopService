@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Docker build'){
             steps{
-                bat 'docker build . --tag=378642390019.dkr.ecr.us-east-1.amazonaws.com/kampaii:latest'
+                bat 'docker build . --tag=kampaii:latest'
             }
         }
     }
