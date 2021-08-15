@@ -10,7 +10,7 @@ pipeline {
                 bat 'mvn clean package'
             }
         }
-        stage('Docker pub'){
+        stage('Docker build'){
             steps{
                 bat 'docker build . --tag=378642390019.dkr.ecr.us-east-1.amazonaws.com/kampaii:latest'
             }
