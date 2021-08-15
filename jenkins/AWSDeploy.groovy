@@ -7,7 +7,7 @@ pipeline{
     stages {
         stage('Build') {
             steps {
-                bat 'echo "test"'
+                bat 'aws --version'
             }
         }
     }
