@@ -12,7 +12,8 @@ pipeline {
         }
         stage('Docker build'){
             steps{
-                bat 'docker build . --tag=kampaii:latest'
+                bat 'docker build .'
+                bat 'docker push kampaii53/aws:latest'
             }
         }
     }
