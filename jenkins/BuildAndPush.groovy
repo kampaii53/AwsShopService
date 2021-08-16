@@ -16,14 +16,10 @@ pipeline {
             }
         }
         stage('Docker push') {
-            environment {
-                DOCKER_HUB_LOGIN = credentials('DockerHub')
-            }
             steps {
-                bat 'echo $DOCKER_HUB_LOGIN'
-//                withDockerRegistry([credentialsName: $]) {
-//                    bat "docker push kampaii53/aws-shop:latest"
-//                }
+                withDockerRegistry([credentialsId: "f42db408-f8db-4e38-a1cd-48caa7c67262", url: ""]) {
+                    bat "docker push kampaii53/aws-shop:latest"
+                }
             }
         }
     }
