@@ -16,10 +16,14 @@ pipeline {
             }
         }
         stage('Docker push') {
+            environment {
+                DOCKER_HUB_LOGIN = credentials('DockerHub')
+            }
             steps {
-                withDockerRegistry([credentialsName: "DockerHub"]) {
-                    bat "docker push kampaii53/aws-shop:latest"
-                }
+                bat 'echo $DOCKER_HUB_LOGIN'
+//                withDockerRegistry([credentialsName: $]) {
+//                    bat "docker push kampaii53/aws-shop:latest"
+//                }
             }
         }
     }
