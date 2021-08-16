@@ -32,7 +32,7 @@ Resources:
       NetworkMode: awsvpc
       ContainerDefinitions:
         - Name: !Sub aws-shop-container
-          Image: !Sub ${DockerHubUserName}/aws-shop:latest
+          Image: !Sub kampaii53/aws-shop:latest
           PortMappings:
             - ContainerPort: 8080
       RequiresCompatibilities:
