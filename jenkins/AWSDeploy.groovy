@@ -7,7 +7,7 @@ pipeline{
     stages {
         stage('Build') {
             steps {
-                bat 'aws --version'
+                bat 'aws cloudformation crate-stack --stack-name awscli --template-body /aws/example.yml'
             }
         }
     }
