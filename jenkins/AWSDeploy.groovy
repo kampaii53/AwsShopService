@@ -7,7 +7,7 @@ pipeline{
     stages {
         stage('Build') {
             steps {
-                bat 'aws cloudformation create-stack --stack-name awscli --template-body /aws/example.yml'
+                bat 'aws --region us-east-1 cloudformation create-stack --stack-name awscli --template-body /aws/example.yml'
             }
         }
     }
