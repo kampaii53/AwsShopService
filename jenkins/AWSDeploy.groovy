@@ -4,11 +4,11 @@ pipeline {
         maven '3.8.2'
         jdk 'java8'
     }
+    environment {
+        USER_CREDENTIALS = credentials('DockerHub')
+    }
     stages {
         stage('Build') {
-            environment {
-                USER_CREDENTIALS = credentials('DockerHub')
-            }
             steps {
                 withAWS(credentials: 'AwsShop', region: 'us-east-1') {
                     bat 'echo $USER_CREDENTIALS_USR'
