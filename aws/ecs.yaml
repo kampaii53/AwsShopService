@@ -32,7 +32,7 @@ Resources:
       NetworkMode: awsvpc
       ContainerDefinitions:
         - Name: !Sub aws-shop-container
-          Image: !Sub kampaii53/aws-shop:latest
+          Image: !Sub ${DockerHubUserName}/${ServiceName}:${ServiceVersion}
           PortMappings:
             - ContainerPort: 8080
       RequiresCompatibilities:
@@ -41,7 +41,7 @@ Resources:
   Service:
     Type: AWS::ECS::Service
     Properties:
-      ServiceName: !Sub aws-shop-service
+      ServiceName: !Sub ${ServiceName}-service
       Cluster: !Ref Cluster
       TaskDefinition: !Ref TaskDefinition
       DesiredCount: 1
