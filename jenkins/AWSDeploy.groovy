@@ -8,7 +8,7 @@ pipeline {
         stage('Build') {
             steps {
                 withAWS(credentials: 'AwsShop', region: 'us-east-1') {
-                    bat 'aws cloudformation create-stack --stack-name awscli --template-body /aws/example.yml'
+                    bat 'aws cloudformation create-stack --stack-name awscli --template-body file://aws/example.yml'
                 }
             }
         }
