@@ -13,16 +13,6 @@ Resources:
     Type: AWS::ECS::Cluster
     Properties:
       ClusterName: kampaii-example-cluster
-  ServiceSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupName: ServiceSecurityGroup
-      GroupDescription: Security group for service
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 8080
-          ToPort: 8080
-          CidrIp: 0.0.0.0/0
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
@@ -52,4 +42,4 @@ Resources:
           Subnets:
             - !Ref SubnetID
           SecurityGroups:
-            - !GetAtt ServiceSecurityGroup.GroupId
+            - sg-075bd967a7dbaedcf
