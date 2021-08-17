@@ -43,3 +43,4 @@ Resources:
             - !Ref SubnetID
           SecurityGroups:
             - sg-075bd967a7dbaedcf
+            - sg-00a6c6c0563438d55
