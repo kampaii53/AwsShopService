@@ -2,6 +2,10 @@ AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   SubnetID:
     Type: String
+  SubnetID2:
+    Type: String
+  SubnetID3:
+    Type: String
   ServiceName:
     Type: String
   ServiceVersion:
@@ -48,5 +52,7 @@ Resources:
           AssignPublicIp: ENABLED
           Subnets:
             - !Ref SubnetID
+            - !Ref SubnetID2
+            - !Ref SubnetID3
           SecurityGroups:
             - !Ref SecurityGroup
