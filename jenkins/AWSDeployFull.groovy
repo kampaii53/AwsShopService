@@ -8,10 +8,8 @@ pipeline {
         stage('Build') {
             steps {
                 withAWS(credentials: 'AwsShop', region: 'us-east-1') {
-                    bat 'aws cloudformation create-stack --stack-name aws-shop --template-body file://aws/ecs-simple.yaml' +
+                    bat 'aws cloudformation create-stack --stack-name aws-shop --template-body file://aws/ecs-private.yaml' +
                             ' --parameters ' +
-                            'ParameterKey=SubnetID,ParameterValue=subnet-030f0d27b78125281 ' +
-                            'ParameterKey=SecurityGroup,ParameterValue=sg-023e14494ecf1fc37 ' +
                             'ParameterKey=ServiceName,ParameterValue=aws-shop ' +
                             'ParameterKey=ServiceVersion,ParameterValue=latest ' +
                             'ParameterKey=DockerHubUserName,ParameterValue=kampaii53'
