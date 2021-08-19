@@ -8,11 +8,9 @@ pipeline {
         stage('Build') {
             steps {
                 withAWS(credentials: 'AwsShop', region: 'us-east-1') {
-                    bat 'aws cloudformation create-stack --stack-name aws-shop --template-body file://aws/ecs-private.yaml' +
+                    bat 'aws cloudformation create-stack --stack-name aws-shop --template-body file://aws/vpc-private-public.yaml' +
                             ' --parameters ' +
-                            'ParameterKey=ServiceName,ParameterValue=aws-shop ' +
-                            'ParameterKey=ServiceVersion,ParameterValue=latest ' +
-                            'ParameterKey=DockerHubUserName,ParameterValue=kampaii53'
+                            'ParameterKey=EnvironmentName,ParameterValue=aws-shop'
                 }
             }
         }
