@@ -10,7 +10,8 @@ pipeline {
                 withAWS(credentials: 'AwsShop', region: 'us-east-1') {
                     bat 'aws cloudformation create-stack --stack-name aws-shop --template-body file://aws/ecs-simple.yaml' +
                             ' --parameters ' +
-                            'ParameterKey=SubnetID,ParameterValue=subnet-039d3b062caa1ee35 ' +
+                            'ParameterKey=SubnetID,ParameterValue=subnet-0f38d179aa3a374f9 ' +
+                            'ParameterKey=SecurityGroup,ParameterValue=sg-07a043ab51584e5d3 ' +
                             'ParameterKey=ServiceName,ParameterValue=aws-shop ' +
                             'ParameterKey=ServiceVersion,ParameterValue=latest ' +
                             'ParameterKey=DockerHubUserName,ParameterValue=kampaii53'
