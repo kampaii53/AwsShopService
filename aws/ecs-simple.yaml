@@ -8,9 +8,9 @@ Parameters:
     Type: String
   DockerHubUserName:
     Type: String
-  SecurityGroup:
-    Description: security group id
-    Type: String
+#  SecurityGroup:
+#    Description: security group id
+#    Type: String
   EnvironmentName:
     Description: An environment name that is prefixed to resource names
     Type: String
@@ -49,4 +49,4 @@ Resources:
           Subnets:
             - !Ref SubnetID
           SecurityGroups:
-            - !Ref SecurityGroup
+            - sg-07a043ab51584e5d3
