@@ -197,18 +197,18 @@ Resources:
       RequiresCompatibilities:
         - EC2
         - FARGATE
-  Service:
-    Type: AWS::ECS::Service
-    Properties:
-      ServiceName: !Sub ${ServiceName}-service
-      Cluster: !Ref Cluster
-      TaskDefinition: !Ref TaskDefinition
-      DesiredCount: 1
-      LaunchType: FARGATE
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          Subnets:
-            - !Ref PrivateSubnet1
-          SecurityGroups:
-            - !Ref NoIngressSecurityGroup
+#  Service:
+#    Type: AWS::ECS::Service
+#    Properties:
+#      ServiceName: !Sub ${ServiceName}-service
+#      Cluster: !Ref Cluster
+#      TaskDefinition: !Ref TaskDefinition
+#      DesiredCount: 1
+#      LaunchType: FARGATE
+#      NetworkConfiguration:
+#        AwsvpcConfiguration:
+#          AssignPublicIp: ENABLED
+#          Subnets:
+#            - !Ref PrivateSubnet1
+#          SecurityGroups:
+#            - !Ref NoIngressSecurityGroup
