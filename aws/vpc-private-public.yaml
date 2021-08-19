@@ -252,3 +252,9 @@ Resources:
     Properties:
       RouteTableId: !Ref PrivateRouteTable3
       SubnetId: !Ref PrivateSubnet3
+  NoIngressSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: "no-ingress-sg"
+      GroupDescription: "Security group with no ingress rule"
+      VpcId: !Ref VPC
