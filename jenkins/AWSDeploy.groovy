@@ -11,7 +11,7 @@ pipeline {
                     bat 'aws cloudformation create-stack --stack-name aws-shop --template-body file://aws/ecs-simple.yaml' +
                             ' --parameters ' +
                             'ParameterKey=SubnetID,ParameterValue=subnet-0f38d179aa3a374f9 ' +
-//                            'ParameterKey=SecurityGroup,ParameterValue=sg-07a043ab51584e5d3 ' +
+                            'ParameterKey=SecurityGroup,ParameterValue=sg-023e14494ecf1fc37 ' +
                             'ParameterKey=ServiceName,ParameterValue=aws-shop ' +
                             'ParameterKey=ServiceVersion,ParameterValue=latest ' +
                             'ParameterKey=DockerHubUserName,ParameterValue=kampaii53'
