@@ -13,7 +13,7 @@ pipeline {
                         '--template-body file://aws/single-public-network.yaml ' +
                         '--capabilities CAPABILITY_IAM'
                     bat 'aws cloudformation wait stack-create-complete ' +
-                        '--stack-name stratospheric-basic-network '
+                        '--stack-name aws-shop-basic-network'
                 }
             }
         }
