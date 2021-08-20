@@ -13,7 +13,7 @@ pipeline {
                             '--template-body file://aws/docker-image-deploy.yaml ' +
                             '--parameters ' +
                             'ParameterKey=NetworkStackName,ParameterValue=aws-shop-basic-network ' +
-                            'ParameterKey=ServiceName,ParameterValue=todo-app-v1 ' +
+                            'ParameterKey=ServiceName,ParameterValue=aws-shop-app ' +
                             'ParameterKey=ImageUrl,ParameterValue=docker.io/kampaii53/aws-shop:latest ' +
                             'ParameterKey=ContainerPort,ParameterValue=8080'
                     bat 'aws cloudformation wait stack-create-complete ' +
