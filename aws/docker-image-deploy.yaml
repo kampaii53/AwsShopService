@@ -77,7 +77,7 @@ Resources:
           Image: 'amazon/aws-xray-daemon'
           PortMappings:
             - ContainerPort: 2000
-              HostPort: 0
+              HostPort: 2000
               Protocol: 'udp'
 
   Service:
