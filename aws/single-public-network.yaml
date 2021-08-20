@@ -115,6 +115,14 @@ Resources:
                   # Allow the ECS tasks to upload logs to CloudWatch
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
+
+                  # allow xray
+                  - 'ray:BatchGetTraces'
+                  - 'xray:GetServiceGraph'
+                  - 'xray:GetTraceGraph'
+                  - 'xray:GetTraceSummaries'
+                  - 'xray:PutTelemetryRecords'
+                  - 'xray:PutTraceSegments'
                 Resource: '*'
 
 Outputs:
