@@ -67,12 +67,12 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: !Ref 'ServiceName'
-      Cpu: 32
+      Cpu: !Ref 'ContainerCpu'
       Memory: 256
       NetworkMode: awsvpc
       ContainerDefinitions:
         - Name: 'xray-daemon-container'
-          Cpu: 32
+          Cpu: !Ref 'ContainerCpu'
           Memory: 256
           Image: 'amazon/aws-xray-daemon'
           PortMappings:
