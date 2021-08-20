@@ -58,6 +58,9 @@ Resources:
           Cpu: 256
           Memory: 1024
           Image: 'amazon/aws-xray-daemon'
+          PortMappings:
+            - ContainerPort: 2000
+                Protocol: "udp"
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:
