@@ -10,7 +10,7 @@ pipeline {
                 withAWS(credentials: 'AwsShop', region: 'us-east-1') {
                     bat 'aws cloudformation create-stack ' +
                             '--stack-name aws-shop-basic-service ' +
-                            '--template-body file://aws/docker-image-deploy.yml ' +
+                            '--template-body file://aws/docker-image-deploy.yaml ' +
                             '--parameters ' +
                             'ParameterKey=NetworkStackName,ParameterValue=aws-shop-basic-network ' +
                             'ParameterKey=ServiceName,ParameterValue=todo-app-v1 ' +
