@@ -60,7 +60,7 @@ Resources:
           Image: 'amazon/aws-xray-daemon'
           PortMappings:
             - ContainerPort: 2000
-                Protocol: "udp"
+              Protocol: "udp"
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:
