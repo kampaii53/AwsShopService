@@ -105,22 +105,6 @@ Resources:
         - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
         - arn:aws:iam::aws:policy/AWSXRayFullAccess
-#      Policies:
-#        - PolicyName: AmazonECSTaskExecutionRolePolicy
-#          PolicyDocument:
-#            Statement:
-#              - Effect: Allow
-#                Action:
-#                  # Allow the ECS Tasks to download images from ECR
-#                  - 'ecr:GetAuthorizationToken'
-#                  - 'ecr:BatchCheckLayerAvailability'
-#                  - 'ecr:GetDownloadUrlForLayer'
-#                  - 'ecr:BatchGetImage'
-#
-#                  # Allow the ECS tasks to upload logs to CloudWatch
-#                  - 'logs:CreateLogStream'
-#                  - 'logs:PutLogEvents'
-#                Resource: '*'
 
 Outputs:
   ClusterName:
