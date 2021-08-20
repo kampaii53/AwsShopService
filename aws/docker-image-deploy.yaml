@@ -61,10 +61,9 @@ Resources:
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:
-              awslogs-create-group: "True"
-              awslogs-group: "/ecs/ecs-cwagent-fargate"
-              awslogs-region: "us-east-1"
-              awslogs-stream-prefix: "ecs"
+              awslogs-group: !Ref 'ServiceName'
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: !Ref 'ServiceName'
 
   Service:
     Type: AWS::ECS::Service
