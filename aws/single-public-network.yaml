@@ -101,24 +101,27 @@ Resources:
             Action: ['sts:AssumeRole']
       Path: /
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
         - arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
-      Policies:
-        - PolicyName: AmazonECSTaskExecutionRolePolicy
-          PolicyDocument:
-            Statement:
-              - Effect: Allow
-                Action:
-                  # Allow the ECS Tasks to download images from ECR
-                  - 'ecr:GetAuthorizationToken'
-                  - 'ecr:BatchCheckLayerAvailability'
-                  - 'ecr:GetDownloadUrlForLayer'
-                  - 'ecr:BatchGetImage'
-
-                  # Allow the ECS tasks to upload logs to CloudWatch
-                  - 'logs:CreateLogStream'
-                  - 'logs:PutLogEvents'
-                Resource: '*'
+        - arn:aws:iam::aws:policy/AmazonECSTaskExecutionRolePolicy
+        - arn:aws:iam::aws:policy/AWSXRayFullAccess
+#      Policies:
+#        - PolicyName: AmazonECSTaskExecutionRolePolicy
+#          PolicyDocument:
+#            Statement:
+#              - Effect: Allow
+#                Action:
+#                  # Allow the ECS Tasks to download images from ECR
+#                  - 'ecr:GetAuthorizationToken'
+#                  - 'ecr:BatchCheckLayerAvailability'
+#                  - 'ecr:GetDownloadUrlForLayer'
+#                  - 'ecr:BatchGetImage'
+#
+#                  # Allow the ECS tasks to upload logs to CloudWatch
+#                  - 'logs:CreateLogStream'
+#                  - 'logs:PutLogEvents'
+#                Resource: '*'
 
 Outputs:
   ClusterName:
