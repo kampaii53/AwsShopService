@@ -117,7 +117,8 @@ Resources:
                   - 'logs:PutLogEvents'
 
                   # allow xray
-                  - 'ray:BatchGetTraces'
+                  - 'xray:GetSamplingRules'
+                  - 'xray:BatchGetTraces'
                   - 'xray:GetServiceGraph'
                   - 'xray:GetTraceGraph'
                   - 'xray:GetTraceSummaries'
