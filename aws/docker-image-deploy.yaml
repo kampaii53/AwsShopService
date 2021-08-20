@@ -63,6 +63,23 @@ Resources:
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: !Ref 'ServiceName'
 
+  XRayDaemonTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: !Ref 'ServiceName'
+      Cpu: 32
+      Memory: 256
+      NetworkMode: awsvpc
+      ContainerDefinitions:
+        - Name: 'xray-daemon-container'
+          Cpu: 32
+          Memory: 256
+          Image: 'amazon/aws-xray-daemon'
+          PortMappings:
+            - ContainerPort: 2000
+              HostPort: 0
+              Protocol: 'udp'
+
   Service:
     Type: AWS::ECS::Service
     Properties:
@@ -85,3 +102,26 @@ Resources:
             - Fn::ImportValue:
                 !Join [':', [!Ref 'NetworkStackName', 'PublicSubnet']]
       TaskDefinition: !Ref 'TaskDefinition'
+
+  XRayService:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: 'x-ray-service'
+      Cluster:
+        Fn::ImportValue:
+          !Join [ ':', [ !Ref 'NetworkStackName', 'ClusterName' ] ]
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 50
+      DesiredCount: !Ref 'DesiredCount'
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          SecurityGroups:
+            - Fn::ImportValue:
+                !Join [ ':', [ !Ref 'NetworkStackName', 'ECSSecurityGroup' ] ]
+          Subnets:
+            - Fn::ImportValue:
+                !Join [ ':', [ !Ref 'NetworkStackName', 'PublicSubnet' ] ]
+      TaskDefinition: !Ref 'XRayDaemonTaskDefinition'
