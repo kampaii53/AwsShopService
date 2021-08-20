@@ -41,6 +41,9 @@ Resources:
       ExecutionRoleArn:
         Fn::ImportValue:
           !Join [ ':', [ !Ref 'NetworkStackName', 'ECSTaskExecutionRole' ] ]
+      TaskRoleArn:
+        Fn::ImportValue:
+          !Join [ ':', [ !Ref 'NetworkStackName', 'ECSTaskExecutionRole' ] ]
       ContainerDefinitions:
         - Name: !Ref 'ServiceName'
           Cpu: 256
