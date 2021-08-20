@@ -100,41 +100,10 @@ Resources:
               Service: ["ecs-tasks.amazonaws.com", "ecs.amazonaws.com", "ec2.amazonaws.com"]
             Action: ['sts:AssumeRole']
       Path: /
-      Policies:
-        - PolicyName: AmazonECSTaskExecutionRolePolicy
-          PolicyDocument:
-            Statement:
-              - Effect: Allow
-                Action:
-                  # Allow the ECS Tasks to download images from ECR
-                  - 'ecr:GetAuthorizationToken'
-                  - 'ecr:BatchCheckLayerAvailability'
-                  - 'ecr:GetDownloadUrlForLayer'
-                  - 'ecr:BatchGetImage'
-
-                  # ecs
-                  - "ecs:CreateCluster"
-                  - "ecs:DeregisterContainerInstance"
-                  - "ecs:DiscoverPollEndpoint"
-                  - "ecs:Poll"
-                  - "ecs:RegisterContainerInstance"
-                  - "ecs:StartTelemetrySession"
-                  - "ecs:Submit*"
-                  - "ecs:StartTask"
-
-                  # Allow the ECS tasks to upload logs to CloudWatch
-                  - 'logs:CreateLogStream'
-                  - 'logs:PutLogEvents'
-
-                  # allow xray
-                  - 'xray:GetSamplingRules'
-                  - 'xray:BatchGetTraces'
-                  - 'xray:GetServiceGraph'
-                  - 'xray:GetTraceGraph'
-                  - 'xray:GetTraceSummaries'
-                  - 'xray:PutTelemetryRecords'
-                  - 'xray:PutTraceSegments'
-                Resource: '*'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/CloudWatchFullAccess
+        - arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess
+        - arn:aws:iam::aws:policy/AWSAppMeshEnvoyAccess
 
 Outputs:
   ClusterName:
