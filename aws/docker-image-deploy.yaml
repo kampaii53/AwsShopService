@@ -16,14 +16,6 @@ Parameters:
     Default: 80
     Description: The port number the application inside the docker container
       is binding to.
-  ContainerCpu:
-    Type: Number
-    Default: 256
-    Description: How much CPU to give the container. 1024 is 1 CPU.
-  ContainerMemory:
-    Type: Number
-    Default: 512
-    Description: How much memory in megabytes to give the container.
   DesiredCount:
     Type: Number
     Default: 1
@@ -41,18 +33,18 @@ Resources:
     Type: AWS::ECS::TaskDefinition
     Properties:
       Family: !Ref 'ServiceName'
-      Cpu: !Ref 'ContainerCpu'
-      Memory: !Ref 'ContainerMemory'
+      Cpu: 512
+      Memory: 1024
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE
       ExecutionRoleArn:
         Fn::ImportValue:
-          !Join [':', [!Ref 'NetworkStackName', 'ECSTaskExecutionRole']]
+          !Join [ ':', [ !Ref 'NetworkStackName', 'ECSTaskExecutionRole' ] ]
       ContainerDefinitions:
         - Name: !Ref 'ServiceName'
-          Cpu: !Ref 'ContainerCpu'
-          Memory: !Ref 'ContainerMemory'
+          Cpu: 256
+          Memory: 512
           Image: !Ref 'ImageUrl'
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
@@ -62,51 +54,22 @@ Resources:
               awslogs-group: !Ref 'ServiceName'
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: !Ref 'ServiceName'
-
-  XRayDaemonTaskDefinition:
-    Type: AWS::ECS::TaskDefinition
-    Properties:
-      Family: !Ref 'ServiceName'
-      Cpu: !Ref 'ContainerCpu'
-      Memory: 256
-      NetworkMode: awsvpc
-      ContainerDefinitions:
         - Name: 'xray-daemon-container'
-          Cpu: !Ref 'ContainerCpu'
-          Memory: 256
-          Image: 'amazon/aws-xray-daemon'
-          PortMappings:
-            - ContainerPort: 2000
-              HostPort: 2000
-              Protocol: 'udp'
+            Cpu: 256
+            Memory: 256
+            Image: 'public.ecr.aws/xray/aws-xray-daemon:latest'
+            LogConfiguration:
+              LogDriver: 'awslogs'
+                Options:
+                  awslogs-create-group: "True"
+                  awslogs-group: "/ecs/ecs-cwagent-fargate"
+                  awslogs-region: "us-east-1"
+                  awslogs-stream-prefix: "ecs"
 
   Service:
     Type: AWS::ECS::Service
     Properties:
       ServiceName: !Ref 'ServiceName'
-      Cluster:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'NetworkStackName', 'ClusterName']]
-      LaunchType: FARGATE
-      DeploymentConfiguration:
-        MaximumPercent: 200
-        MinimumHealthyPercent: 50
-      DesiredCount: !Ref 'DesiredCount'
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          SecurityGroups:
-            - Fn::ImportValue:
-                !Join [':', [!Ref 'NetworkStackName', 'ECSSecurityGroup']]
-          Subnets:
-            - Fn::ImportValue:
-                !Join [':', [!Ref 'NetworkStackName', 'PublicSubnet']]
-      TaskDefinition: !Ref 'TaskDefinition'
-
-  XRayService:
-    Type: AWS::ECS::Service
-    Properties:
-      ServiceName: 'x-ray-service'
       Cluster:
         Fn::ImportValue:
           !Join [ ':', [ !Ref 'NetworkStackName', 'ClusterName' ] ]
@@ -117,11 +80,11 @@ Resources:
       DesiredCount: !Ref 'DesiredCount'
       NetworkConfiguration:
         AwsvpcConfiguration:
-          AssignPublicIp: DISABLED
+          AssignPublicIp: ENABLED
           SecurityGroups:
             - Fn::ImportValue:
                 !Join [ ':', [ !Ref 'NetworkStackName', 'ECSSecurityGroup' ] ]
           Subnets:
             - Fn::ImportValue:
                 !Join [ ':', [ !Ref 'NetworkStackName', 'PublicSubnet' ] ]
-      TaskDefinition: !Ref 'XRayDaemonTaskDefinition'
+      TaskDefinition: !Ref 'TaskDefinition'
