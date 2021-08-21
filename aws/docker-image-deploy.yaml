@@ -23,6 +23,21 @@ Parameters:
 
 Resources:
 
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Properties:
+      AvailabilityZones:
+        - Fn::Select:
+            - 0
+            - Fn::GetAZs: { Ref: 'AWS::Region' }
+      Listeners:
+        - LoadBalancerPort: '8080'
+          InstancePort: '8080'
+          Protocol: HTTP
+      Subnets:
+        - Fn::ImportValue:
+            !Join [ ':', [ !Ref 'NetworkStackName', 'PublicSubnet' ] ]
+
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
@@ -58,11 +73,6 @@ Resources:
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: !Ref 'ServiceName'
         - Name: 'xray-daemon-container'
-#          Environment:
-#            - Name: AWS_ACCESS_KEY_ID
-#              Value: 'AKIAVQKGYLQB2VHER6GT'
-#            - Name: AWS_SECRET_ACCESS_KEY
-#              Value: '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'
           Cpu: 256
           Memory: 1024
           Image: 'amazon/aws-xray-daemon'

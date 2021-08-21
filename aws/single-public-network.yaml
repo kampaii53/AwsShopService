@@ -106,18 +106,6 @@ Resources:
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
         - arn:aws:iam::aws:policy/AWSXRayFullAccess
 
-  LoadBalancer:
-    Type: AWS::ElasticLoadBalancing::LoadBalancer
-    Properties:
-      AvailabilityZones:
-        Fn::Select:
-          - 0
-          - Fn::GetAZs: { Ref: 'AWS::Region' }
-      Listeners:
-        - LoadBalancerPort: '8080'
-          InstancePort: '8080'
-          Protocol: HTTP
-
 Outputs:
   ClusterName:
     Description: The name of the ECS cluster
