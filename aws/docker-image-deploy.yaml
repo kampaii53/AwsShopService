@@ -26,6 +26,7 @@ Resources:
   LoadBalancer:
     Type: AWS::ElasticLoadBalancing::LoadBalancer
     Properties:
+      LoadBalancerName: !Join [ ':', [ !Ref 'NetworkStackName', 'LoadBalancer' ] ]
       Listeners:
         - LoadBalancerPort: '8080'
           InstancePort: '8080'
@@ -94,7 +95,8 @@ Resources:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
       DesiredCount: !Ref 'DesiredCount'
-      LoadBalancers: [ !Ref 'LoadBalancer' ]
+      LoadBalancers:
+        - LoadBalancerName: !GetAtt LoadBalancer.LoadBalancerName
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
