@@ -20,21 +20,8 @@ Parameters:
     Type: Number
     Default: 1
     Description: How many copies of the service task to run.
-  LoadBalancerName:
-    Type: String
-    Default: "AwsShopLoadBalancer"
 
 Resources:
-
-  LoadBalancer:
-    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
-    Properties:
-      Name: !Ref LoadBalancerName
-      Type: network
-      IpAddressType: ipv4
-      Subnets:
-        - Fn::ImportValue:
-            !Join [ ':', [ !Ref 'NetworkStackName', 'PublicSubnet' ] ]
 
   LogGroup:
     Type: AWS::Logs::LogGroup
@@ -96,10 +83,6 @@ Resources:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
       DesiredCount: !Ref 'DesiredCount'
-      LoadBalancers:
-        - LoadBalancerName: !Ref LoadBalancerName
-          ContainerName: !Ref ServiceName
-          ContainerPort: !Ref ContainerPort
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
