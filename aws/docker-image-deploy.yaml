@@ -100,6 +100,7 @@ Resources:
       DesiredCount: !Ref 'DesiredCount'
       LoadBalancers:
         - LoadBalancerName: !Ref LoadBalancerName
+          ContainerName: !Ref ServiceName
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
