@@ -20,13 +20,16 @@ Parameters:
     Type: Number
     Default: 1
     Description: How many copies of the service task to run.
+  LoadBalancerName:
+    Type: String
+    Default: "AwsShopLoadBalancer"
 
 Resources:
 
   LoadBalancer:
     Type: AWS::ElasticLoadBalancing::LoadBalancer
     Properties:
-      LoadBalancerName: !Join [ ':', [ !Ref 'NetworkStackName', 'LoadBalancer' ] ]
+      LoadBalancerName: !Ref LoadBalancerName
       Listeners:
         - LoadBalancerPort: '8080'
           InstancePort: '8080'
@@ -96,7 +99,7 @@ Resources:
         MinimumHealthyPercent: 50
       DesiredCount: !Ref 'DesiredCount'
       LoadBalancers:
-        - LoadBalancerName: !Join [ ':', [ !Ref 'NetworkStackName', 'LoadBalancer' ] ]
+        - LoadBalancerName: !Ref LoadBalancerName
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
