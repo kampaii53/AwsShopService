@@ -27,13 +27,11 @@ Parameters:
 Resources:
 
   LoadBalancer:
-    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      LoadBalancerName: !Ref LoadBalancerName
-      Listeners:
-        - LoadBalancerPort: '8080'
-          InstancePort: '8080'
-          Protocol: HTTP
+      Name: !Ref LoadBalancerName
+      Type: network
+      IpAddressType: ipv4
       Subnets:
         - Fn::ImportValue:
             !Join [ ':', [ !Ref 'NetworkStackName', 'PublicSubnet' ] ]
