@@ -96,7 +96,7 @@ Resources:
         MinimumHealthyPercent: 50
       DesiredCount: !Ref 'DesiredCount'
       LoadBalancers:
-        - LoadBalancerName: !GetAtt LoadBalancer.LoadBalancerName
+        - LoadBalancerName: !Join [ ':', [ !Ref 'NetworkStackName', 'LoadBalancer' ] ]
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
