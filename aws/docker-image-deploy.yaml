@@ -94,6 +94,7 @@ Resources:
         MaximumPercent: 200
         MinimumHealthyPercent: 50
       DesiredCount: !Ref 'DesiredCount'
+      LoadBalancers: [ !Ref 'LoadBalancer' ]
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
