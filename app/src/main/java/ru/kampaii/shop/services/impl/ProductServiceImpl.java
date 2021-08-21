@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void add(String name) {
-        repository.save(new ProductEntity(null,name));
+    public ProductEntity add(String name) {
+        return repository.save(new ProductEntity(null,name));
     }
 }

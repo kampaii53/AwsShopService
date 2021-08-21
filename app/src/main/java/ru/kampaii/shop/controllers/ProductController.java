@@ -3,6 +3,7 @@ package ru.kampaii.shop.controllers;
 import com.amazonaws.xray.spring.aop.XRayEnabled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.kampaii.shop.model.dto.ProductDto;
 import ru.kampaii.shop.services.ProductService;
@@ -24,7 +25,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductDto> getProducts() {
         log.debug("getProducts executes");
         return StreamSupport.stream(productService.getAll().spliterator(), false)
@@ -32,10 +33,14 @@ public class ProductController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping("/add")
-    public void putProduct(@RequestBody ProductDto productDto) {
+    @PutMapping(
+            value = "/add",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String putProduct(@RequestBody ProductDto productDto) {
         log.debug("putProduct executes: {}", productDto);
-        productService.add(productDto.getName());
+        return productService.add(productDto.getName()).getId().toString();
     }
 
 }

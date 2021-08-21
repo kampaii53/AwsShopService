@@ -10,5 +10,5 @@ public interface ProductService {
 
     Iterable<ProductEntity> getAll();
 
-    void add(String name);
+    ProductEntity add(String name);
 }
