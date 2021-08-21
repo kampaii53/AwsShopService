@@ -101,6 +101,7 @@ Resources:
       LoadBalancers:
         - LoadBalancerName: !Ref LoadBalancerName
           ContainerName: !Ref ServiceName
+          ContainerPort: !Ref ContainerPort
       NetworkConfiguration:
         AwsvpcConfiguration:
           AssignPublicIp: ENABLED
