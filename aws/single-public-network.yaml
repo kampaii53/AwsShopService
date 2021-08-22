@@ -111,6 +111,9 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: "products"
+      ProvisionedThroughput:
+        ReadCapacityUnits: 10
+        WriteCapacityUnits: 10
       AttributeDefinitions:
         - AttributeName: "id"
           AttributeType: "N"
