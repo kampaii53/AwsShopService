@@ -107,6 +107,19 @@ Resources:
         - arn:aws:iam::aws:policy/AWSXRayFullAccess
         - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
 
+  DynamoDbTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: "products"
+      AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "N"
+        - AttributeName: "name"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "id"
+          KeyType: "HASH"
+
 Outputs:
   ClusterName:
     Description: The name of the ECS cluster
