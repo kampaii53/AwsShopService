@@ -105,6 +105,7 @@ Resources:
         - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
         - arn:aws:iam::aws:policy/AWSXRayFullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
 
 Outputs:
   ClusterName:
