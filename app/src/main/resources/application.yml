@@ -1,0 +1,4 @@
+cloud:
+  aws:
+    stack:
+      name: aws-shop-basic-network

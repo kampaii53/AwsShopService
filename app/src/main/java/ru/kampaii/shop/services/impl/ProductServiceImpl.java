@@ -2,6 +2,8 @@ package ru.kampaii.shop.services.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ru.kampaii.shop.model.entities.ProductEntity;
 import ru.kampaii.shop.model.entities.dynamo.ProductDynamoEntity;
@@ -13,6 +15,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@CacheConfig(cacheNames = "product-cache")
 public class ProductServiceImpl implements ProductService {
 
     private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
@@ -25,11 +28,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable
     public Optional<ProductEntity> getById(Long id) {
         return repository.findById(id);
     }
 
     @Override
+    @Cacheable
     public Iterable<ProductEntity> getAll() {
         return productDynamoRepository.findAll().stream().map(
                 productDynamoEntity -> new ProductEntity(productDynamoEntity.getId(), productDynamoEntity.getName())
