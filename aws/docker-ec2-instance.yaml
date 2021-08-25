@@ -26,12 +26,6 @@ Parameters:
     Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
 Resources:
 
-  LogGroup:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Ref 'ServiceName'
-      RetentionInDays: 1
-
   MyEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
