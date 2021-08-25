@@ -24,17 +24,6 @@ Resources:
       CidrBlock: '10.0.1.0/24'
       MapPublicIpOnLaunch: true
 
-  PublicSubnetAz2:
-    Type: AWS::EC2::Subnet
-    Properties:
-      AvailabilityZone:
-        Fn::Select:
-          - 1
-          - Fn::GetAZs: { Ref: 'AWS::Region' }
-      VpcId: !Ref 'VPC'
-      CidrBlock: '10.0.2.0/24'
-      MapPublicIpOnLaunch: true
-
   InternetGateway:
     Type: AWS::EC2::InternetGateway
 
@@ -129,4 +118,4 @@ Resources:
       VPCSecurityGroups:
         - !GetAtt DBEC2SecurityGroup.GroupId
       DBSubnetGroupName:
-        Ref: PublicSubnetAz2
+        Ref: PublicSubnet
