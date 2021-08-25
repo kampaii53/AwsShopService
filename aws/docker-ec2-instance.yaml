@@ -148,11 +148,12 @@ Resources:
     Type: AWS::RDS::DBInstance
     Properties:
       DBInstanceIdentifier: aws-shop-db
-      AllocatedStorage: 20
-      DBInstanceClass: db.t3.small
+      AllocatedStorage: 1
+      DBInstanceClass: db.t2.micro
       Engine: postgres
       MasterUsername: postgres
       MasterUserPassword: postgres
+      EngineVersion: 9.6.20-R1
       DBName: AwsShopDb
       VPCSecurityGroups:
         - !Ref DBEC2SecurityGroup
