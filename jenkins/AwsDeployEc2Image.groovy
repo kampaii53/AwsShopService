@@ -9,7 +9,7 @@ pipeline {
             steps {
                 withAWS(credentials: 'AwsShop', region: 'us-east-1') {
                     bat 'aws cloudformation create-stack ' +
-                            '--stack-name aws-shop-basic-service ' +
+                            '--stack-name aws-shop-ec2-instance ' +
                             '--template-body file://aws/docker-ec2-instance.yaml'
                     bat 'aws cloudformation wait stack-create-complete ' +
                             '--stack-name aws-shop-basic-service'
