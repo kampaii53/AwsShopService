@@ -154,7 +154,6 @@ Resources:
       MasterUsername: postgres
       MasterUserPassword: postgres
       DBName: aws-shop-db
-      EngineVersion: 13.1
       DBSecurityGroups:
         - !GetAtt DBEC2SecurityGroup.GroupId
       DBSubnetGroupName: !Ref DbSubnetGroup
