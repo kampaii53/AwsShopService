@@ -122,8 +122,8 @@ Resources:
           amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
-          docker pull docker.io/kampaii53/aws-shop:latest
-          docker run -p80:8080 kampaii53/aws-shop:latest
+#          docker pull docker.io/kampaii53/aws-shop:latest
+#          docker run -p80:8080 kampaii53/aws-shop:latest
 
   DBEC2SecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -143,6 +143,7 @@ Resources:
       SubnetIds:
         - !Ref PublicSubnet
         - !Ref PublicSubnet2
+        - !Ref PublicSubnet3
 
   WebAppDatabase:
     Type: AWS::RDS::DBInstance
@@ -157,6 +158,7 @@ Resources:
       DBName: AwsShopDb
       DeleteAutomatedBackups: true
       EnablePerformanceInsights: false
+      PubliclyAccessible: true
       VPCSecurityGroups:
         - !Ref DBEC2SecurityGroup
       DBSubnetGroupName: !Ref DbSubnetGroup
