@@ -136,6 +136,14 @@ Resources:
           FromPort: 5432
           ToPort: 5432
 
+  DbSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: subnet group for postgres
+      SubnetIds:
+        - !Ref PublicSubnet
+        - !Ref PublicSubnet2
+
   WebAppDatabase:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -149,3 +157,4 @@ Resources:
       EngineVersion: 13.1
       DBSecurityGroups:
         - !GetAtt DBEC2SecurityGroup.GroupId
+      DBSubnetGroupName: !Ref DbSubnetGroup
