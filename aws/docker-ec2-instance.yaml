@@ -101,8 +101,6 @@ Resources:
         - IpProtocol: tcp
           FromPort: 5432
           ToPort: 5432
-          SourceSecurityGroupName:
-            Ref: ECSSecurityGroup
 
   WebAppDatabase:
     Type: AWS::RDS::DBInstance
