@@ -115,5 +115,3 @@ Resources:
       EngineVersion: 13.1
       VPCSecurityGroups:
         - !GetAtt DBEC2SecurityGroup.GroupId
-      DBSubnetGroupName:
-        Ref: PublicSubnet
