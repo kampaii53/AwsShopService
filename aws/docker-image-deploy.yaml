@@ -92,4 +92,3 @@ Resources:
           Subnets:
             - Fn::ImportValue:
                 !Join [ ':', [ !Ref 'NetworkStackName', 'PublicSubnet' ] ]
-      TaskDefinition: !Ref 'TaskDefinition'

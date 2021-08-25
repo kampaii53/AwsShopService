@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploys a Docker container within a previously created VPC. Requires a running network stack.
+Parameters:
+  NetworkStackName:
+    Type: String
+    Description: The name of the networking stack that
+      these resources are put into.
+  ServiceName:
+    Type: String
+    Description: A human-readable name for the service.
+  ImageUrl:
+    Type: String
+    Description: The url of a docker image that will handle incoming traffic.
+  ContainerPort:
+    Type: Number
+    Default: 80
+    Description: The port number the application inside the docker container
+      is binding to.
+  DesiredCount:
+    Type: Number
+    Default: 1
+    Description: How many copies of the service task to run.
+  LatestAmiId:
+    Description: Gets the latest AMI from Systems Manager Parameter store
+    Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
+    Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
+Resources:
+
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Ref 'ServiceName'
+      RetentionInDays: 1
+
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: t3.micro
+      Tags:
+        - Key: Name
+          Value: Simple Server
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet:
+            - Fn::ImportValue:
+                !Join [ ':', [ !Ref 'NetworkStackName', 'ECSSecurityGroup' ] ]
+          SubnetId:
+            Fn::ImportValue:
+                   !Join [ ':', [ !Ref 'NetworkStackName', 'PublicSubnet' ] ]
+      UserData:
+        Fn::Base64:
+          !Sub |
+          #!/bin/bash -xe
+          yum -y update
+          amazon-linux-extras install docker
+          service docker start
+          usermod -a -G docker ec2-user
+          docker pull docker.io/kampaii53/aws-shop:latest
