@@ -128,4 +128,4 @@ Resources:
       VPCSecurityGroups:
         - !GetAtt DBEC2SecurityGroup.GroupId
       DBSubnetGroupName:
-        Ref: PublicSubnet
+        Ref: PublicSubnetAz2
