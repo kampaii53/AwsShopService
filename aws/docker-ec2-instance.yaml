@@ -148,13 +148,15 @@ Resources:
     Type: AWS::RDS::DBInstance
     Properties:
       DBInstanceIdentifier: aws-shop-db
-      AllocatedStorage: 20
+      AllocatedStorage: 1
       DBInstanceClass: db.t2.micro
       Engine: postgres
       MasterUsername: postgres
       MasterUserPassword: postgres
       EngineVersion: 9.6.20-R1
       DBName: AwsShopDb
+      DeleteAutomatedBackups: true
+      EnablePerformanceInsights: false
       VPCSecurityGroups:
         - !Ref DBEC2SecurityGroup
       DBSubnetGroupName: !Ref DbSubnetGroup
