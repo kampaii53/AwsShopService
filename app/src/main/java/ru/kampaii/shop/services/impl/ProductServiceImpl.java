@@ -21,20 +21,20 @@ public class ProductServiceImpl implements ProductService {
     private static final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
     private final ProductRepository repository;
     private final ProductDynamoRepository productDynamoRepository;
+    private final SqsSender sqsSender;
 
-    public ProductServiceImpl(ProductRepository repository, ProductDynamoRepository productDynamoRepository) {
+    public ProductServiceImpl(ProductRepository repository, ProductDynamoRepository productDynamoRepository, SqsSender sqsSender) {
         this.repository = repository;
         this.productDynamoRepository = productDynamoRepository;
+        this.sqsSender = sqsSender;
     }
 
     @Override
-    @Cacheable
     public Optional<ProductEntity> getById(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    @Cacheable
     public Iterable<ProductEntity> getAll() {
         return productDynamoRepository.findAll().stream().map(
                 productDynamoEntity -> new ProductEntity(productDynamoEntity.getId(), productDynamoEntity.getName())
@@ -50,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
         productDynamoRepository.save(
                 productDynamoEntity
         );
+        sqsSender.send(entity);
         return entity;
     }
 }
