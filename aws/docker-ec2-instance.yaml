@@ -89,3 +89,15 @@ Resources:
           usermod -a -G docker ec2-user
           docker pull docker.io/kampaii53/aws-shop:latest
           docker run -p80:8080 kampaii53/aws-shop:latest
+
+  WebAppDatabase:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: aws-shop-db
+      AllocatedStorage: "1"
+      DBInstanceClass: db.t2.small
+      Engine: postgres
+      MasterUsername: postgres
+      MasterUserPassword: postgres
+      DBName: aws-shop-db
+      EngineVersion: 13.1
