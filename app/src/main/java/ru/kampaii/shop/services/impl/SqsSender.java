@@ -17,14 +17,16 @@ public class SqsSender {
     private static final Logger log = LoggerFactory.getLogger(SqsSender.class);
 
     private final AmazonSQSAsync amazonSqs;
+    private String queueUrl;
 
     @Autowired
     public SqsSender(final AmazonSQSAsync amazonSQSAsync) {
         this.amazonSqs = amazonSQSAsync;
+        queueUrl = amazonSQSAsync.getQueueUrl("test").getQueueUrl();
     }
 
     public boolean send(final ProductEntity productEntity) {
-        MessageChannel messageChannel = new QueueMessageChannel(amazonSqs, "test");
+        MessageChannel messageChannel = new QueueMessageChannel(amazonSqs, queueUrl);
 
         Message<String> msg = MessageBuilder.withPayload(productEntity.toString())
                 .setHeader("sender", "app1")
