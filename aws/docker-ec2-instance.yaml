@@ -155,5 +155,5 @@ Resources:
       MasterUserPassword: postgres
       DBName: AwsShopDb
       DBSecurityGroups:
-        - !GetAtt DBEC2SecurityGroup.GroupId
+        - !Ref DBEC2SecurityGroup
       DBSubnetGroupName: !Ref DbSubnetGroup
