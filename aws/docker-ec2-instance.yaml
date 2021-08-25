@@ -147,5 +147,5 @@ Resources:
       MasterUserPassword: postgres
       DBName: aws-shop-db
       EngineVersion: 13.1
-      VPCSecurityGroups:
+      DBSecurityGroups:
         - !GetAtt DBEC2SecurityGroup.GroupId
