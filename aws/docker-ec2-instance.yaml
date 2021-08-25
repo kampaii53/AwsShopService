@@ -1,30 +1,69 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Deploys a Docker container within a previously created VPC. Requires a running network stack.
+Description: Deploy an ec2
 Parameters:
-  NetworkStackName:
-    Type: String
-    Description: The name of the networking stack that
-      these resources are put into.
-  ServiceName:
-    Type: String
-    Description: A human-readable name for the service.
-  ImageUrl:
-    Type: String
-    Description: The url of a docker image that will handle incoming traffic.
-  ContainerPort:
-    Type: Number
-    Default: 80
-    Description: The port number the application inside the docker container
-      is binding to.
-  DesiredCount:
-    Type: Number
-    Default: 1
-    Description: How many copies of the service task to run.
   LatestAmiId:
     Description: Gets the latest AMI from Systems Manager Parameter store
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
     Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
 Resources:
+
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: '10.0.0.0/16'
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: { Ref: 'AWS::Region' }
+      VpcId: !Ref 'VPC'
+      CidrBlock: '10.0.1.0/24'
+      MapPublicIpOnLaunch: true
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  GatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref 'VPC'
+      InternetGatewayId: !Ref 'InternetGateway'
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref 'VPC'
+
+  PublicSubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref PublicRouteTable
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachment
+    Properties:
+      RouteTableId: !Ref 'PublicRouteTable'
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref 'InternetGateway'
+
+  ECSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Access to the ECS containers
+      VpcId: !Ref 'VPC'
+
+  ECSSecurityGroupIngressFromAnywhere:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      Description: Allows inbound traffic from anywhere
+      GroupId: !Ref 'ECSSecurityGroup'
+      IpProtocol: -1
+      CidrIp: 0.0.0.0/0
 
   MyEC2Instance:
     Type: AWS::EC2::Instance
@@ -38,11 +77,8 @@ Resources:
         - AssociatePublicIpAddress: "true"
           DeviceIndex: "0"
           GroupSet:
-            - Fn::ImportValue:
-                !Join [ ':', [ !Ref 'NetworkStackName', 'ECSSecurityGroup' ] ]
-          SubnetId:
-            Fn::ImportValue:
-                   !Join [ ':', [ !Ref 'NetworkStackName', 'PublicSubnet' ] ]
+            - !Ref ECSSecurityGroup
+          SubnetId: !Ref PublicSubnet
       UserData:
         Fn::Base64:
           !Sub |
