@@ -54,6 +54,8 @@ Resources:
           !Sub |
           #!/bin/bash -xe
           yum -y update
+          curl https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.rpm -o /home/ec2-user/xray.rpm
+          yum install -y /home/ec2-user/xray.rpm
           amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
