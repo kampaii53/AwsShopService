@@ -106,6 +106,8 @@ Resources:
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
         - arn:aws:iam::aws:policy/AWSXRayFullAccess
         - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+        - arn:aws:iam::aws:policy/AmazonElastiCacheFullAccess
+        - arn:aws:iam::aws:policy/AmazonSQSFullAccess
 
   DynamoDbTable:
     Type: AWS::DynamoDB::Table
@@ -142,6 +144,11 @@ Resources:
         - Key: Name
           Value: !Ref AWS::StackName
 
+  SQSQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: "product-cache-details"
+
 Outputs:
   ClusterName:
     Description: The name of the ECS cluster
@@ -173,3 +180,8 @@ Outputs:
     Value: !Ref 'ECSSecurityGroup'
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ECSSecurityGroup' ] ]
+  CacheUrl:
+    Description: url of cache provider created
+    Value: !GetAtt ElastiCacheCluster.RedisEndpoint.Address
+    Export:
+      Name: !Join [ ':', [ !Ref 'AWS::StackName', 'CacheClusterUrl' ] ]
