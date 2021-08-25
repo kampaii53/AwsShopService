@@ -136,16 +136,16 @@ Resources:
           FromPort: 5432
           ToPort: 5432
 
-#  WebAppDatabase:
-#    Type: AWS::RDS::DBInstance
-#    Properties:
-#      DBInstanceIdentifier: aws-shop-db
-#      AllocatedStorage: "1"
-#      DBInstanceClass: db.t2.small
-#      Engine: postgres
-#      MasterUsername: postgres
-#      MasterUserPassword: postgres
-#      DBName: aws-shop-db
-#      EngineVersion: 13.1
-#      VPCSecurityGroups:
-#        - !GetAtt DBEC2SecurityGroup.GroupId
+  WebAppDatabase:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: aws-shop-db
+      AllocatedStorage: "1"
+      DBInstanceClass: db.t2.small
+      Engine: postgres
+      MasterUsername: postgres
+      MasterUserPassword: postgres
+      DBName: aws-shop-db
+      EngineVersion: 13.1
+      VPCSecurityGroups:
+        - !GetAtt DBEC2SecurityGroup.GroupId
