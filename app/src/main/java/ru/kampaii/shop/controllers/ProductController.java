@@ -1,6 +1,5 @@
 package ru.kampaii.shop.controllers;
 
-import com.amazonaws.xray.spring.aop.XRayEnabled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -14,7 +13,6 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping(path = "/product/2")
-@XRayEnabled
 public class ProductController {
 
     private static final Logger log = LoggerFactory.getLogger(ProductController.class);
