@@ -113,19 +113,19 @@ Resources:
           ToPort: 5432
           SourceSecurityGroupName:
             Ref: ECSSecurityGroup
-
-  WebAppDatabase:
-    Type: AWS::RDS::DBInstance
-    Properties:
-      DBInstanceIdentifier: aws-shop-db
-      AllocatedStorage: "1"
-      DBInstanceClass: db.t2.small
-      Engine: postgres
-      MasterUsername: postgres
-      MasterUserPassword: postgres
-      DBName: aws-shop-db
-      EngineVersion: 13.1
-      VPCSecurityGroups:
-        - !GetAtt DBEC2SecurityGroup.GroupId
-      DBSubnetGroupName:
-        Ref: PublicSubnetAz2
+#
+#  WebAppDatabase:
+#    Type: AWS::RDS::DBInstance
+#    Properties:
+#      DBInstanceIdentifier: aws-shop-db
+#      AllocatedStorage: "1"
+#      DBInstanceClass: db.t2.small
+#      Engine: postgres
+#      MasterUsername: postgres
+#      MasterUserPassword: postgres
+#      DBName: aws-shop-db
+#      EngineVersion: 13.1
+#      VPCSecurityGroups:
+#        - !GetAtt DBEC2SecurityGroup.GroupId
+#      DBSubnetGroupName:
+#        Ref: PublicSubnetAz2
