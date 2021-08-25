@@ -1,8 +1,6 @@
 package ru.kampaii.shop.configuration;
 
-import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.xray.javax.servlet.AWSXRayServletFilter;
-import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
@@ -23,11 +21,5 @@ public class AWSConfig {
         return DefaultCredentialsProvider.builder()
                 .profileName("kampaii")
                 .build();
-    }
-
-    @Bean
-    public QueueMessagingTemplate queueMessagingTemplate(
-            AmazonSQSAsync amazonSQSAsync) {
-        return new QueueMessagingTemplate(amazonSQSAsync);
     }
 }
