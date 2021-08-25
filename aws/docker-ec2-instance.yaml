@@ -148,7 +148,7 @@ Resources:
     Type: AWS::RDS::DBInstance
     Properties:
       DBInstanceIdentifier: aws-shop-db
-      AllocatedStorage: "1"
+      AllocatedStorage: 20
       DBInstanceClass: db.t3.small
       Engine: postgres
       MasterUsername: postgres
