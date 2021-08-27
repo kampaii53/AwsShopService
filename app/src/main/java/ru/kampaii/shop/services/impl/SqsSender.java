@@ -19,10 +19,10 @@ public class SqsSender {
     private String queueUrl;
 
     @Autowired
-    public SqsSender(final AmazonSQSAsync amazonSQSAsync, QueueMessagingTemplate queueMessagingTemplate) {
+    public SqsSender(final AmazonSQSAsync amazonSQSAsync) {
         this.amazonSqs = amazonSQSAsync;
+        this.queueMessagingTemplate = new QueueMessagingTemplate(amazonSQSAsync);
         queueUrl = amazonSQSAsync.getQueueUrl("product-cache-details").getQueueUrl();
-        this.queueMessagingTemplate = queueMessagingTemplate;
         log.info("got queueUrl: {}", queueUrl);
     }
 
