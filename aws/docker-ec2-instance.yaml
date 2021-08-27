@@ -180,11 +180,6 @@ Resources:
         - Key: Name
           Value: !Ref AWS::StackName
 
-  SQSQueue:
-    Type: AWS::SQS::Queue
-    Properties:
-      QueueName: "product-cache-details"
-
 #  WebAppDatabase:
 #    Type: AWS::RDS::DBInstance
 #    Properties:
