@@ -10,7 +10,8 @@ pipeline {
                 withAWS(credentials: 'AwsShop', region: 'us-east-1') {
                     bat 'aws cloudformation create-stack ' +
                             '--stack-name aws-shop-ec2-instance ' +
-                            '--template-body file://aws/docker-ec2-instance.yaml'
+                            '--template-body file://aws/docker-ec2-instance.yaml ' +
+                            '--capabilities CAPABILITY_NAMED_IAM'
                     bat 'aws cloudformation wait stack-create-complete ' +
                             '--stack-name aws-shop-ec2-instance'
                 }
