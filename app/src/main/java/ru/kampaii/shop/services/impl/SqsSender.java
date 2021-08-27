@@ -22,7 +22,7 @@ public class SqsSender {
     @Autowired
     public SqsSender(final AmazonSQSAsync amazonSQSAsync) {
         this.amazonSqs = amazonSQSAsync;
-        queueUrl = amazonSQSAsync.getQueueUrl("test").getQueueUrl();
+        queueUrl = amazonSQSAsync.getQueueUrl("product-cache-details").getQueueUrl();
         log.info("got queueUrl: {}", queueUrl);
     }
 

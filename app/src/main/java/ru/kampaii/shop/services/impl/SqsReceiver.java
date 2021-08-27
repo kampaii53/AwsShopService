@@ -12,7 +12,7 @@ public class SqsReceiver {
 
     private static final Logger log = LoggerFactory.getLogger(SqsReceiver.class);
 
-    @SqsListener(value = "test", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS )
+    @SqsListener(value = "product-cache-details", deletionPolicy = SqsMessageDeletionPolicy.ON_SUCCESS )
     public void productCacheListener(final String message,  @Header("SenderId") String senderId) {
         log.info("got message for product {}", message);
     }
