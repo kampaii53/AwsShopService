@@ -158,6 +158,33 @@ Resources:
     Properties:
       QueueName: "product-cache-details"
 
+  SubnetGroup:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties:
+      Description: Cache Subnet Group
+      SubnetIds:
+        - !Ref PublicSubnet
+
+  ElastiCacheCluster:
+    Type: AWS::ElastiCache::CacheCluster
+    Properties:
+      AutoMinorVersionUpgrade: true
+      ClusterName: product-cache
+      Engine: redis
+      CacheNodeType: cache.t2.micro
+      NumCacheNodes: 1
+      CacheSubnetGroupName: !Ref SubnetGroup
+      VpcSecurityGroupIds:
+        - !GetAtt ECSSecurityGroup.GroupId
+      Tags:
+        - Key: Name
+          Value: !Ref AWS::StackName
+
+  SQSQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: "product-cache-details"
+
 #  WebAppDatabase:
 #    Type: AWS::RDS::DBInstance
 #    Properties:
