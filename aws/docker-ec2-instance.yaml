@@ -100,6 +100,13 @@ Resources:
       IpProtocol: -1
       CidrIp: 0.0.0.0/0
 
+  RunnerInstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: AwsShopInstanceProfile
+      Roles:
+        - KampaiiEc2Admin
+
   MyEC2Instance:
     Type: AWS::EC2::Instance
     Properties:
@@ -108,6 +115,7 @@ Resources:
       Tags:
         - Key: Name
           Value: Simple Server
+      IamInstanceProfile: !Ref RunnerInstanceProfile
       NetworkInterfaces:
         - AssociatePublicIpAddress: "true"
           DeviceIndex: "0"
@@ -122,8 +130,8 @@ Resources:
           amazon-linux-extras install docker
           service docker start
           usermod -a -G docker ec2-user
-#          docker pull docker.io/kampaii53/aws-shop:latest
-#          docker run -p80:8080 kampaii53/aws-shop:latest
+          docker pull docker.io/kampaii53/aws-shop:latest
+          docker run -p80:8080 kampaii53/aws-shop:latest
 
   DBEC2SecurityGroup:
     Type: AWS::EC2::SecurityGroup
