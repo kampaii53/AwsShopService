@@ -62,6 +62,7 @@ Resources:
     Type: AWS::ECS::Service
     Properties:
       ServiceName: !Ref 'ServiceName'
+      TaskDefinition: !Ref 'TaskDefinition'
       Cluster:
         Fn::ImportValue:
           !Join [ ':', [ !Ref 'NetworkStackName', 'ClusterName' ] ]
