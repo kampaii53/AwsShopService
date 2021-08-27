@@ -23,6 +23,7 @@ public class SqsSender {
     public SqsSender(final AmazonSQSAsync amazonSQSAsync) {
         this.amazonSqs = amazonSQSAsync;
         queueUrl = amazonSQSAsync.getQueueUrl("test").getQueueUrl();
+        log.info("got queueUrl: {}", queueUrl);
     }
 
     public boolean send(final ProductEntity productEntity) {

@@ -1,1 +1,1 @@
-docker build . --tag=app:latest
+docker build . --tag=kampaii53/aws-shop:latest
