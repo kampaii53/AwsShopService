@@ -29,7 +29,7 @@ public class ProductController {
         List<ProductDto> result = StreamSupport.stream(productService.getAll().spliterator(), false)
                 .map(entity -> new ProductDto(entity.getId(), entity.getName()))
                 .collect(Collectors.toList());
-        log.debug("getProducts got result");
+        log.info("getProducts got result");
         return result;
     }
 
