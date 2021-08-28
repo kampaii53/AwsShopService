@@ -30,6 +30,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Cacheable("ElastiCacheCluster")
     public Iterable<ProductEntity> getAll() {
+        log.info("getAll executes");
         return repository.findAll();
     }
 

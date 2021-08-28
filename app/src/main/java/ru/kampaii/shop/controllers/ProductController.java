@@ -25,10 +25,12 @@ public class ProductController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ProductDto> getProducts() {
-        log.debug("getProducts executes");
-        return StreamSupport.stream(productService.getAll().spliterator(), false)
+        log.info("getProducts executes");
+        List<ProductDto> result = StreamSupport.stream(productService.getAll().spliterator(), false)
                 .map(entity -> new ProductDto(entity.getId(), entity.getName()))
                 .collect(Collectors.toList());
+        log.debug("getProducts got result");
+        return result;
     }
 
     @PutMapping(
@@ -37,7 +39,7 @@ public class ProductController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String putProduct(@RequestBody ProductDto productDto) {
-        log.debug("putProduct executes: {}", productDto);
+        log.info("putProduct executes: {}", productDto);
         return productService.add(productDto.getName()).getId().toString();
     }
 
