@@ -107,31 +107,57 @@ Resources:
       Roles:
         - KampaiiEc2Admin
 
-#  MyEC2Instance:
-#    Type: AWS::EC2::Instance
-#    Properties:
-#      ImageId: !Ref LatestAmiId
-#      InstanceType: t2.micro
-#      Tags:
-#        - Key: Name
-#          Value: Simple Server
-#      IamInstanceProfile: !Ref RunnerInstanceProfile
-#      NetworkInterfaces:
-#        - AssociatePublicIpAddress: "true"
-#          DeviceIndex: "0"
-#          GroupSet:
-#            - !Ref ECSSecurityGroup
-#          SubnetId: !Ref PublicSubnet
-#      UserData:
-#        Fn::Base64:
-#          !Sub |
-#          #!/bin/bash -xe
-#          yum -y update
-#          amazon-linux-extras install docker
-#          service docker start
-#          usermod -a -G docker ec2-user
-#          docker pull docker.io/kampaii53/cart-service:latest
-#          docker run -p80:8080 kampaii53/cart-service:latest
+  CartServiceInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: t2.micro
+      Tags:
+        - Key: Name
+          Value: Simple Server
+      IamInstanceProfile: !Ref RunnerInstanceProfile
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet:
+            - !Ref ECSSecurityGroup
+          SubnetId: !Ref PublicSubnet
+      UserData:
+        Fn::Base64:
+          !Sub |
+          #!/bin/bash -xe
+          yum -y update
+          amazon-linux-extras install docker
+          service docker start
+          usermod -a -G docker ec2-user
+          docker pull docker.io/kampaii53/cart-service:latest
+          docker run -p80:8080 kampaii53/cart-service:latest
+
+  OrderServiceInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: t2.micro
+      Tags:
+        - Key: Name
+          Value: Simple Server
+      IamInstanceProfile: !Ref RunnerInstanceProfile
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet:
+            - !Ref ECSSecurityGroup
+          SubnetId: !Ref PublicSubnet
+      UserData:
+        Fn::Base64:
+          !Sub |
+          #!/bin/bash -xe
+          yum -y update
+          amazon-linux-extras install docker
+          service docker start
+          usermod -a -G docker ec2-user
+          docker pull docker.io/kampaii53/order-service:latest
+          docker run -p80:8080 kampaii53/order-service:latest
 
   DBEC2SecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -167,24 +193,29 @@ Resources:
         - !Ref PublicSubnet2
         - !Ref PublicSubnet3
 
-#  Queue:
-#    Type: AWS::SQS::Queue
-#    Properties:
-#      QueueName: "cart-content"
-#
-#  WebAppDatabase:
-#    Type: AWS::RDS::DBInstance
-#    Properties:
-#      DBInstanceIdentifier: cartservicedb
-#      AllocatedStorage: 5
-#      DBInstanceClass: db.t2.micro
-#      Engine: postgres
-#      MasterUsername: postgres
-#      MasterUserPassword: postgres
-#      EngineVersion: 9.6.1
-#      DBName: cartservicedb
-#      DeleteAutomatedBackups: true
-#      EnablePerformanceInsights: false
-#      VPCSecurityGroups:
-#        - !Ref DBEC2SecurityGroup
-#      DBSubnetGroupName: !Ref DbSubnetGroup
+  CartContentQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: "cart-content"
+
+  EmailQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: "email-content"
+
+  WebAppDatabase:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: cartservicedb
+      AllocatedStorage: 5
+      DBInstanceClass: db.t2.micro
+      Engine: postgres
+      MasterUsername: postgres
+      MasterUserPassword: postgres
+      EngineVersion: 9.6.1
+      DBName: cartservicedb
+      DeleteAutomatedBackups: true
+      EnablePerformanceInsights: false
+      VPCSecurityGroups:
+        - !Ref DBEC2SecurityGroup
+      DBSubnetGroupName: !Ref DbSubnetGroup
