@@ -171,7 +171,6 @@ Resources:
       DBName: cart-service
       DeleteAutomatedBackups: true
       EnablePerformanceInsights: false
-      PubliclyAccessible: true
       VPCSecurityGroups:
         - !Ref DBEC2SecurityGroup
       DBSubnetGroupName: !Ref DbSubnetGroup
