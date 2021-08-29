@@ -68,7 +68,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ru.kampaii.cartservice.Application</mainClass>
+                    <mainClass>ru.kampaii.orderservice.Application</mainClass>
                 </configuration>
             </plugin>
         </plugins>
