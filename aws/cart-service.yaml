@@ -168,7 +168,7 @@ Resources:
       MasterUsername: postgres
       MasterUserPassword: postgres
       EngineVersion: 9.6.1
-      DBName: cart-service
+      DBName: CartService
       DeleteAutomatedBackups: true
       EnablePerformanceInsights: false
       VPCSecurityGroups:
