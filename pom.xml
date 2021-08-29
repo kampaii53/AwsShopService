@@ -17,6 +17,7 @@
 
     <modules>
         <module>app</module>
+        <module>shopping-cart-service</module>
     </modules>
 
     <properties>
