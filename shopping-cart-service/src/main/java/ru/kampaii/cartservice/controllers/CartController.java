@@ -4,7 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.kampaii.cartservice.model.entities.CartEntity;
 import ru.kampaii.cartservice.services.CartService;
 
-@RestController("/cart-service")
+@RestController
+@RequestMapping(path = "/cart-service")
 public class CartController {
 
     private final CartService cartService;

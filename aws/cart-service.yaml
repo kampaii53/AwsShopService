@@ -139,6 +139,10 @@ Resources:
       GroupName: AwsShopRDSSecurityGroup
       GroupDescription: Allow postgres inbound traffic
       VpcId: !Ref VPC
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 5432
