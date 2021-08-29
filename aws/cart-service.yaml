@@ -124,13 +124,18 @@ Resources:
           SubnetId: !Ref PublicSubnet
       UserData:
         Fn::Base64:
-          !Sub |
-          #!/bin/bash -xe
-          yum -y update
-          amazon-linux-extras install docker
-          service docker start
-          usermod -a -G docker ec2-user
-          docker pull docker.io/kampaii53/cart-service:latest
+          !Sub
+          - !Sub |
+            #!/bin/bash -xe
+            yum -y update
+            amazon-linux-extras install docker
+            service docker start
+            usermod -a -G docker ec2-user
+            export DB_HOST=${Url}
+            docker pull docker.io/kampaii53/cart-service:latest
+          - {
+              Url: !GetAtt WebAppDatabase.Endpoint.Address
+          }
 #          docker run -p80:8080 kampaii53/cart-service:latest
 
   DBEC2SecurityGroup:
@@ -166,14 +171,14 @@ Resources:
   WebAppDatabase:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBInstanceIdentifier: cart-service-db
+      DBInstanceIdentifier: cartservicedb
       AllocatedStorage: 5
       DBInstanceClass: db.t2.micro
       Engine: postgres
       MasterUsername: postgres
       MasterUserPassword: postgres
       EngineVersion: 9.6.1
-      DBName: CartService
+      DBName: cartservicedb
       DeleteAutomatedBackups: true
       EnablePerformanceInsights: false
       VPCSecurityGroups:
