@@ -16,7 +16,8 @@ pipeline {
                     bat "aws lambda create-function --function-name AwsShopLambda --zip-file" +
                             " fileb://lambda/target/lambda-1.0-SNAPSHOT.jar" +
                             " --role arn:aws:iam::378642390019:role/KampaiiEc2Admin" +
-                            " --runtime java8"
+                            " --runtime java8" +
+                            " --handler ru.kampaii.AwsShopLambdaHandler"
                 }
             }
         }
