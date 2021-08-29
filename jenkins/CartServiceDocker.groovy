@@ -12,8 +12,7 @@ pipeline {
         }
         stage('Docker build') {
             steps {
-                bat 'cd shopping-cart-service'
-                bat 'docker build . --tag kampaii53/cart-service:latest'
+                bat 'docker build ./shopping-cart-service --tag kampaii53/cart-service:latest'
             }
         }
         stage('Docker push') {

@@ -12,8 +12,7 @@ pipeline {
         }
         stage('Docker build') {
             steps {
-                bat 'cd app'
-                bat 'docker build . --tag kampaii53/aws-shop:latest'
+                bat 'docker build ./app --tag kampaii53/aws-shop:latest'
             }
         }
         stage('Docker push') {
