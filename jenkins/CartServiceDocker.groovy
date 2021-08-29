@@ -27,7 +27,7 @@ pipeline {
                 }
             }
         }
-        stage('Docker pushorder-service') {
+        stage('Docker push order-service') {
             steps {
                 withDockerRegistry([credentialsId: "f42db408-f8db-4e38-a1cd-48caa7c67262", url: ""]) {
                     bat "docker push kampaii53/order-service:latest"
