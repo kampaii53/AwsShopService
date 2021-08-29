@@ -10,6 +10,14 @@ pipeline {
                 bat 'mvn clean package'
             }
         }
+        stage('Create lambda') {
+            steps {
+                withAWS(credentials: 'AwsShop', region: 'us-east-1') {
+                    bat "aws lambda create function --function-name AwsShopLambda --zip-file" +
+                            " fileb://lambda/target/lambda-1.0-SNAPSHOT.jar"
+                }
+            }
+        }
         stage('Docker build cart-service') {
             steps {
                 bat 'docker build ./shopping-cart-service --tag kampaii53/cart-service:latest'
@@ -31,14 +39,6 @@ pipeline {
             steps {
                 withDockerRegistry([credentialsId: "f42db408-f8db-4e38-a1cd-48caa7c67262", url: ""]) {
                     bat "docker push kampaii53/order-service:latest"
-                }
-            }
-        }
-        stage('Create lambda') {
-            steps {
-                withAWS(credentials: 'AwsShop', region: 'us-east-1') {
-                    bat "aws lambda create function --function-name AwsShopLambda --zip-file" +
-                            " fileb://lambda/target/lambda-1.0-SNAPSHOT.jar"
                 }
             }
         }
