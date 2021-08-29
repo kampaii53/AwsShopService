@@ -219,3 +219,20 @@ Resources:
       VPCSecurityGroups:
         - !Ref DBEC2SecurityGroup
       DBSubnetGroupName: !Ref DbSubnetGroup
+
+  SNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: aws-shop-topic
+      KmsMasterKeyId: String
+      Subscription:
+        - Endpoint: "kampaii.work@gmail.com"
+          Protocol: email
+      TopicName: aws-shop-topic
+
+  #this triggers lambda
+  LambdaSourceMapper:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn: !Ref EmailQueue
+      FunctionName: AwsShopLambda
