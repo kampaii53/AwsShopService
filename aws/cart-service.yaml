@@ -141,15 +141,16 @@ Resources:
       VpcId: !Ref VPC
 
   PublicInboundRule:
-    Type: AWS::EC2::SecurityGroupEgress
+    Type: AWS::EC2::SecurityGroupIngress
     Properties:
       GroupId: !Ref DBEC2SecurityGroup
-      IpProtocol: "-1"
+      IpProtocol: tcp
+      FromPort: 5432
       ToPort: 5432
       CidrIp: 0.0.0.0/0
 
   PublicOutboundRule:
-    Type: AWS::EC2::SecurityGroupIngress
+    Type: AWS::EC2::SecurityGroupEgress
     Properties:
       GroupId: !Ref DBEC2SecurityGroup
       IpProtocol: tcp
