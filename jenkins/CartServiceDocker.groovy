@@ -34,5 +34,13 @@ pipeline {
                 }
             }
         }
+        stage('Create lambda') {
+            steps {
+                withAWS(credentials: 'AwsShop', region: 'us-east-1') {
+                    bat "aws lambda update-function-code --function-name AwsShopLambda --zip-file" +
+                            " fileb://lambda/target/lambda-1.0-SNAPSHOT.jar"
+                }
+            }
+        }
     }
 }
